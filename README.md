@@ -3,7 +3,7 @@ This plugin simply performs an S3 getObject of the specified files to their
 respectively defined paths, and then removes the files after the serverless
 deployment package is created.
 
-## Installation (soon)
+## Installation
 `npm i --save serverless-plugin-s3-packager`
 
 ## Use (in serverless.yml)
