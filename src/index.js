@@ -7,7 +7,6 @@ let AWS = require('aws-sdk');
 let Class = require('class.extend');
 let fs = require('fs');
 let path = require('path');
-let _ = require('lodash');
 
 const deployedFiles = [];
 
