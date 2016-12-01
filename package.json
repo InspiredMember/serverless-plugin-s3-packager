@@ -1,0 +1,28 @@
+{
+  "name": "serverless-plugin-s3-packager",
+  "version": "0.0.1",
+  "description": "Plugin for SLS 1.x which enables packaging files from S3 for deployment.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "InspiredMember",
+  "homepage": "https://github.com/InspiredMember/serverless-plugin-s3-packager#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InspiredMember/serverless-plugin-s3-packager.git"
+  },
+  "keywords": [
+    "serverless", "plugin", "s3", "lambda"
+  ],
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "aws-sdk": "2.7.7",
+    "class.extend": "0.9.2",
+    "lodash": "4.17.2"
+  }
+}
