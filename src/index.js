@@ -8,6 +8,8 @@ let Class = require('class.extend');
 let fs = require('fs');
 let path = require('path');
 
+let sync = require('synchronize');
+
 module.exports = Class.extend({
     init(serverless, opts) {
         this._serverless = serverless;
@@ -19,14 +21,25 @@ module.exports = Class.extend({
         this._deployedFiles = [];
 
         this.hooks = {
-            'before:deploy:function:deploy': this._addFiles.bind(this),
-            'after:deploy:function:deploy': this._removeFiles.bind(this),
-            'before:deploy:createDeploymentArtifacts': this._addFiles.bind(this),
-            'after:deploy:createDeploymentArtifacts': this._removeFiles.bind(this),
+            'before:deploy:initialize': this._beforeInitialize.bind(this),
+            'after:deploy:deploy': this._afterDeploy.bind(this),
         };
     },
 
-    _addFiles() {
+    _afterDeploy() {
+        for (let filepath of this._deployedFiles) {
+            fs.unlink(filepath, (error) => {
+                if (error) {
+                    throw error;
+                }
+
+                this._serverless.cli.log('Removed file: ' + filepath);
+            });
+        }
+    },
+
+    _beforeInitialize() {
+      sync.fiber(() => {
         for (let s3file of this._serverless.service.custom.s3files || []) {
             this._s3.getObject({Bucket: s3file.Bucket, Key: s3file.Key}, (s3Error, data) => {
                 if (s3Error) {
@@ -45,17 +58,6 @@ module.exports = Class.extend({
                 });
             });
         }
-    },
-
-    _removeFiles() {
-        for (let filepath of this._deployedFiles) {
-            fs.unlink(filepath, (error) => {
-                if (error) {
-                    throw error;
-                }
-
-                this._serverless.cli.log('Removed file: ' + filepath);
-            });
-        }
+      });
     },
 });
