@@ -1,6 +1,6 @@
 {
   "name": "serverless-plugin-s3-packager",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Plugin for SLS 1.x which enables packaging files from S3 for deployment.",
   "main": "src/index.js",
   "scripts": {
